@@ -38,7 +38,6 @@ while True:
     if ids is not None:
         cv2.aruco.drawDetectedMarkers(frame, esquinas, ids)
 
-    cv2.imshow("Cam", frame)
 
     tecla = cv2.waitKey(1) & 0xFF
 
@@ -63,20 +62,64 @@ while True:
 
             homografia_metrica, _ = cv2.findHomography(esquinas_registradas, puntos_mundo)
 
+            puntos_transformados = cv2.perspectiveTransform(esquinas_registradas.reshape(-1, 1, 2), homografia_metrica)
+            puntos_transformados = puntos_transformados.reshape(-1, 2)
+
+            print("\nEsquinas transformadas a mm:")
+            for i, punto in enumerate(puntos_transformados):
+                x, y = punto
+                print(f"Esquina {i}: ({x:.1f}, {y:.1f})")
+
+            centro_mundo = np.mean(puntos_transformados, axis=0)
+
+            print("\nCentro del ArUco en el mundo:")
+            print(f"X = {centro_mundo[0]:.2f} mm")
+            print(f"Y = {centro_mundo[1]:.2f} mm")
+
             print("\n==============================")
             print("REGISTRO REALIZADO")
             print("==============================")
             print(f"ID registrado: {id_registrado}")
-
-            print("\nEsquinas de la imagen:")
-
-            for i, punto in enumerate(esquinas_registradas):
-                x, y = punto
-                print(f"Esquina {i}: ({x:.1f}, {y:.1f})")
             
             print("\nHomografia imagen -> mm:")
             print(homografia_metrica)
             print("==============================\n")
+
+    if homografia_metrica is not None and ids is not None:
+        
+        indice_actual = None
+
+        for i, id_actual in enumerate(ids):
+            if int(id_actual) == id_registrado:
+                indice_actual = i
+                break
+        
+        if indice_actual is not None:
+
+            esquinas_actuales = esquinas[indice_actual][0]
+
+            puntos_mundo_actuales = cv2.perspectiveTransform(esquinas_actuales.reshape(-1, 1, 2), homografia_metrica)
+            puntos_mundo_actuales = puntos_mundo_actuales.reshape(-1, 2)
+
+            centro_mundo_actual = np.mean(puntos_mundo_actuales, axis=0)
+
+            x_actual = centro_mundo_actual[0]
+            y_actual = centro_mundo_actual[1]
+
+            texto = (
+                f"X: {x_actual:.1f} mm  "
+                f"Y: {y_actual:.1f} mm"
+            )
+
+            cv2.putText(frame,
+                        texto, (20, 35),
+                        cv2.FONT_HERSHEY_SIMPLEX,
+                        0.8,
+                        (0, 255, 0), 
+                        2
+                    )
+
+    cv2.imshow("Camara", frame)
 
 
     if tecla == 27:
