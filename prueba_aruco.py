@@ -106,9 +106,19 @@ while True:
             x_actual = centro_mundo_actual[0]
             y_actual = centro_mundo_actual[1]
 
+            esquina_0 = puntos_mundo_actuales[0]
+            esquina_1 = puntos_mundo_actuales[1]
+
+            dx = esquina_1[0] - esquina_0[0]
+            dy = esquina_1[1] - esquina_0[1]
+
+            angulo = np.degrees(np.arctan2(dy, dx))
+
+
             texto = (
                 f"X: {x_actual:.1f} mm  "
-                f"Y: {y_actual:.1f} mm"
+                f"Y: {y_actual:.1f} mm  "
+                f"Angulo: {angulo:.1f} grados"
             )
 
             cv2.putText(frame,
