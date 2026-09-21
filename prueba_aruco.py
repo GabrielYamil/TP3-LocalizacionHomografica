@@ -1,4 +1,5 @@
 import cv2
+import numpy as np
 
 diccionario = cv2.aruco.getPredefinedDictionary(
     cv2.aruco.DICT_4X4_50
@@ -20,6 +21,7 @@ print("Presiona ESC para salir.")
 
 esquinas_registradas = None
 id_registrado = None
+homografia_metrica = None
 
 while True:
 
@@ -52,15 +54,28 @@ while True:
 
             esquinas_registradas = esquinas[indice][0].copy()
 
+            puntos_mundo = np.array([
+                [0, 100],
+                [100, 100],
+                [100, 0],
+                [0, 0]
+            ], dtype=np.float32)
+
+            homografia_metrica, _ = cv2.findHomography(esquinas_registradas, puntos_mundo)
+
             print("\n==============================")
             print("REGISTRO REALIZADO")
             print("==============================")
             print(f"ID registrado: {id_registrado}")
 
+            print("\nEsquinas de la imagen:")
+
             for i, punto in enumerate(esquinas_registradas):
                 x, y = punto
                 print(f"Esquina {i}: ({x:.1f}, {y:.1f})")
             
+            print("\nHomografia imagen -> mm:")
+            print(homografia_metrica)
             print("==============================\n")
 
 
