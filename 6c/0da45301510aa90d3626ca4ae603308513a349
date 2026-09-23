@@ -1,0 +1,43 @@
+README.md
+  s_c2030184dbcbe1::t_4d86162d4a61a7 90-91
+  s_c2030184dbcbe1::t_eb337e0dfd5713 1-89,92-121
+consigna.md
+  h_0382e731b45a27 1-12
+  h_0382e731b45a27 13-101
+prueba_aruco.py
+  s_30566468637556::t_3a892723dc8292 82-84
+  s_30566468637556::t_f7a162635c4b7e 26,36-38,42
+  s_c2030184dbcbe1::t_bcab765bf2f516 73-81
+  s_30566468637556::t_fad9433d74b4f5 105-109,118,121,136-196,198-199,201-202
+  s_c2030184dbcbe1::t_1c91f232efe748 25
+  h_0382e731b45a27 11
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "6c0da45301510aa90d3626ca4ae603308513a349",
+  "prompts": {},
+  "humans": {
+    "h_0382e731b45a27": {
+      "author": "Facundo Carballo <carballofacundo70@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_30566468637556": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "971ec6c1-657b-40a7-9334-7b232ebd4a53",
+        "model": "gemini-3.5-flash"
+      },
+      "human_author": "Facundo Carballo <carballofacundo70@gmail.com>"
+    },
+    "s_c2030184dbcbe1": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "353f1584-9b2a-46d3-8e68-c921b34807da",
+        "model": "gemini-3.5-flash"
+      },
+      "human_author": "Facundo Carballo <carballofacundo70@gmail.com>"
+    }
+  }
+}
